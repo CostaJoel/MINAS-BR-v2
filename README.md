@@ -19,7 +19,7 @@ This project implements the MINAS-BR algorithm and related experiments for multi
 ### 1. Clone the Repository
 
 ```sh
-git clone https://github.com/your-username/MINAS-BR-v2.git
+git clone https://github.com/CostaJoel/MINAS-BR-v2.git
 cd MINAS-BR-v2
 ```
 

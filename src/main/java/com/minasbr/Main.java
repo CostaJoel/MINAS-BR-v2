@@ -249,6 +249,7 @@ public class Main {
         av.setQtdeNP(model.getNPs().size());
         av.writeMeasuresOverTime(outputDirectory);
         av.writeConceptEvolutionNP(model, outputDirectory);
+        fileOut.flush();
         fileOut.close();
         filePredictions.close();
         fileOff.close();

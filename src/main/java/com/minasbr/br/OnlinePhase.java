@@ -56,6 +56,13 @@ public class OnlinePhase {
         this.threshold = threshold;
         extInfo = new FileWriter(new File(outputDirectory+"/extInfo.txt"),false);
         sleepMemory = new ArrayList<>();
+        // Write header to results file
+        try {
+            this.fileOn.write("=== MINAS-BR Online Phase Results ===\n");
+            this.fileOn.flush();
+        } catch (IOException e) {
+            System.err.println("Error writing header to results file: " + e.getMessage());
+        }
     }
     
     /**
@@ -237,18 +244,21 @@ public class OnlinePhase {
     public void putClusterMemorySleep(int windowSize, ArrayList<MicroClusterBR> model, FileWriter fileOut) throws IOException {
         ArrayList<MicroClusterBR> listaMicro = new ArrayList<>();
         this.fileOn.write("Tamanho do Modelo: " + model.size());
+        this.fileOn.flush();
         for (int i = 0; i < model.size(); i++) {
             if (model.get(i).getMicroCluster().getTime() < (timestamp - (windowSize))) {
                 listaMicro.add(model.get(i));
                 getSleepMemory().add(model.get(i));
                 fileOut.write("Micro-Grupo Removido: " + i +" classes: " + model.get(i).getMicroCluster().getLabelClass() + " categoria: " +  model.get(i).getMicroCluster().getCategory());
                 fileOut.write("\n");
+                fileOut.flush();
                 model.remove(i);
                 i--;
             }
         }
         try{
             fileOn.write("Timestamp: " + this.timestamp + " - Micro grupos removidos: " + listaMicro.size() + " - Tamanho modelo ["+model.get(0).getMicroCluster().getLabelClass()+"]:" + model.size() + "\n");
+            fileOn.flush();
             System.out.println("Timestamp: " + this.timestamp + " - Micro grupos removidos: " + listaMicro.size() + " - Tamanho modelo ["+model.get(0).getMicroCluster().getLabelClass()+"]:" + model.size());
         }catch(Exception e){
             
@@ -581,6 +591,7 @@ public class OnlinePhase {
         System.out.println(textoArq);
         this.fileOn.write(textoArq);
         this.fileOn.write("\n");
+        this.fileOn.flush();
         //remove the examples marked with label -2, i. e., the unknown examples used in the creation of new valid micro-clusters
         int count_rem = 0;
         for (int g = 0; g < removeExamples.length; g++) {
@@ -808,12 +819,14 @@ public class OnlinePhase {
                         this.getSleepMemory().add(value.get(i));
                         fileOut.write("Removed micro-clusters: " + i +" label: " + value.get(i).getMicroCluster().getLabelClass() + " category: " +  value.get(i).getMicroCluster().getCategory());
                         fileOut.write("\n");
+                        fileOut.flush();
                         value.remove(i);
                         i--;
                     }
                 }
                 try{
                      fileOut.write("Timestamp: " + this.getTimestamp() + " - removed micro-clusters: " + listaMicro.size() + " - model's size ["+value.get(0).getMicroCluster().getLabelClass()+"]:" + value.size() + "\n");
+                     fileOut.flush();
                     System.out.println("Timestamp: " + this.getTimestamp() + " - removed micro-clusters: " + listaMicro.size() + " - model's size ["+value.get(0).getMicroCluster().getLabelClass()+"]:" + value.size());
                 }catch(IndexOutOfBoundsException e){
                     

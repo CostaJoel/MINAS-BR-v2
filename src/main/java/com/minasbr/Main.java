@@ -21,16 +21,6 @@ import weka.core.Instances;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-
-        if (args.length < 8) {
-            System.out.println("Argumentos insuficientes!");
-            System.out.println("Uso:");
-            System.out.println("java -jar MINAS-BR.jar <tipoAlgoritmo> <dataSetName> <trainPath> <testPath> <outputDirectory> <k_ini> <omega> <L>");
-            System.out.println("Exemplo:");
-            System.out.println("java -jar MINAS-BR.jar minas-br MOA-5C-7C-2D resources/datasets/MOA-5C-7C-2D-train.arff resources/datasets/MOA-5C-7C-2D-test.arff resources/results_output 0.05 2000 7");
-            return;
-        }
-
         String tipoAlgoritmo = args[0].toLowerCase();
         String dataSetName = args[1];
         String trainPath = args[2];
@@ -52,6 +42,14 @@ public class Main {
         switch (tipoAlgoritmo) {
             case "minas-br":
                 System.out.println("Você escolheu executar o MINAS-BR.");
+                if (args.length < 8) {
+                    System.out.println("Argumentos insuficientes!");
+                    System.out.println("Uso:");
+                    System.out.println("java -jar MINAS-BR.jar <tipoAlgoritmo> <dataSetName> <trainPath> <testPath> <outputDirectory> <k_ini> <omega> <L>");
+                    System.out.println("Exemplo:");
+                    System.out.println("java -jar MINAS-BR.jar minas-br MOA-5C-7C-2D resources/datasets/MOA-5C-7C-2D-train.arff resources/datasets/MOA-5C-7C-2D-test.arff resources/results_output 0.05 2000 7");
+                    return;
+                }
                 // double k_ini = 0.05;
                 // String omega = "2000";
                 // String theta = "" + (int) Math.ceil(Double.parseDouble("0.75") * Double.parseDouble(omega));
